@@ -1,0 +1,1 @@
+{"type":"Scene","props":{"width":1920,"height":1080},"compId":2,"child":[{"type":"Sprite","props":{"y":0,"x":0,"texture":"scene/BattleField.png"},"compId":4},{"type":"Script","props":{"runtime":"script/SetBattleField.ts"},"compId":6}],"loadList":["scene/BattleField.png"],"loadList3D":[]}
