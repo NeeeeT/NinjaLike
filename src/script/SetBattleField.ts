@@ -22,17 +22,6 @@ export default class SetBattleFied extends Laya.Script{
                 box.on(Laya.Event.CLICK, this, ()=>{
                     if(this.m_clicked){
                         if(!(box.x === this.m_ninjaSelf.x || box.y === this.m_ninjaSelf.y)) return;
-                        // this.m_movingTimer = setInterval(()=>{
-                        //     if(Math.abs(this.m_ninjaAI.x - this.m_ninjaSelf.x) < 50
-                        //         && Math.abs(this.m_ninjaAI.y - this.m_ninjaSelf.y) < 50){
-                        //         this.m_ninjaAI.destroy();
-                        //         this.m_ninjaAI.destroyed = true;
-                        //         setTimeout(()=>{ this.setNinjaAI(); }, 1000);
-                        //         clearInterval(this.m_movingTimer);
-                        //         this.m_movingTimer = null;
-                        //         return;
-                        //     }
-                        // }, 10);
                         Laya.Tween.to(this.m_ninjaSelf, {
                             x: box.x,
                             y: box.y,
@@ -104,7 +93,6 @@ export default class SetBattleFied extends Laya.Script{
         });
         
         console.log('NinjaAI pos: x: ' + this.m_ninjaAI.x + ' y: ' + this.m_ninjaAI.y);
-        console.log(123);
         
         Laya.stage.addChild(this.m_ninjaAI);
     }
