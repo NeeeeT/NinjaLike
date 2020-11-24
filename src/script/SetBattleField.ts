@@ -22,26 +22,21 @@ export default class SetBattleFied extends Laya.Script{
                 box.on(Laya.Event.CLICK, this, ()=>{
                     if(this.m_clicked){
                         if(!(box.x === this.m_ninjaSelf.x || box.y === this.m_ninjaSelf.y)) return;
-                        this.m_movingTimer = setInterval(()=>{
-                            if(Math.abs(this.m_ninjaAI.x - this.m_ninjaSelf.x) < 50
-                                && Math.abs(this.m_ninjaAI.y - this.m_ninjaSelf.y) < 50){
-                                this.m_ninjaAI.destroy();
-                                this.m_ninjaAI.destroyed = true;
-                                setTimeout(()=>{ this.setNinjaAI(); }, 1000);
-                                clearInterval(this.m_movingTimer);
-                                this.m_movingTimer = null;
-                                return;
-                            }
-                        }, 10);
+                        // this.m_movingTimer = setInterval(()=>{
+                        //     if(Math.abs(this.m_ninjaAI.x - this.m_ninjaSelf.x) < 50
+                        //         && Math.abs(this.m_ninjaAI.y - this.m_ninjaSelf.y) < 50){
+                        //         this.m_ninjaAI.destroy();
+                        //         this.m_ninjaAI.destroyed = true;
+                        //         setTimeout(()=>{ this.setNinjaAI(); }, 1000);
+                        //         clearInterval(this.m_movingTimer);
+                        //         this.m_movingTimer = null;
+                        //         return;
+                        //     }
+                        // }, 10);
                         Laya.Tween.to(this.m_ninjaSelf, {
                             x: box.x,
                             y: box.y,
-                        }, 150, Laya.Ease.linearInOut, Laya.Handler.create(this, ()=>{
-                            if(this.m_movingTimer){
-                                clearInterval(this.m_movingTimer);
-                                this.m_movingTimer = null;
-                            }
-                        }));
+                        }, 150);
                         this.m_clicked = false;
                         this.m_ninjaSelf.alpha = this.m_clicked ? 0.2 : 1;
                     }
@@ -63,7 +58,21 @@ export default class SetBattleFied extends Laya.Script{
         this.m_ninjaSelf.zOrder = 50;
         this.m_ninjaSelf.pos(randomDot.x, randomDot.y);
 
-        
+        let rig = this.m_ninjaSelf.addComponent(Laya.RigidBody) as Laya.RigidBody;
+        let col = this.m_ninjaSelf.addComponent(Laya.CircleCollider) as Laya.CircleCollider;
+        let scr = this.m_ninjaSelf.addComponent(Laya.Script) as Laya.Script;
+
+        rig.gravityScale = 0;
+        col.label = 'ninjaSelf';
+        scr.onTriggerEnter = (col: Laya.CircleCollider) =>{
+            if(col.label === 'ninjaAI'){
+                col.owner.destroy();
+                setTimeout(()=>{
+                    this.setNinjaAI();
+                }, 1000)
+            }
+        }
+             
         this.m_ninjaSelf.on(Laya.Event.CLICK, this, ()=>{
             this.m_clicked = !this.m_clicked;
             this.m_ninjaSelf.alpha = this.m_clicked ? 0.2 : 1;
@@ -81,9 +90,16 @@ export default class SetBattleFied extends Laya.Script{
         this.m_ninjaAI.play();
         this.m_ninjaAI.width = this.m_ninjaSelf.height = 120;
         this.m_ninjaAI.zOrder = 50;
-        this.m_ninjaAI.alpha = 0.3
+        this.m_ninjaAI.alpha = 0.5;
         this.m_ninjaAI.pos(randomDot.x, randomDot.y);
-        
+
+        let rig = this.m_ninjaAI.addComponent(Laya.RigidBody) as Laya.RigidBody;
+        let col = this.m_ninjaAI.addComponent(Laya.CircleCollider) as Laya.CircleCollider;
+        let scr = this.m_ninjaAI.addComponent(Laya.Script) as Laya.Script;
+
+        col.label = 'ninjaAI';
+        rig.gravityScale = 0;
+         
         this.m_ninjaAI.on(Laya.Event.CLICK, this, ()=>{
         });
         
