@@ -14,9 +14,6 @@
             this.setUnitBox();
             this.setNinja();
             this.setNinjaAI();
-            setInterval(() => {
-                console.log(this.m_ninjaSelf.destroyed, this.m_ninjaAI.destroyed);
-            }, 2000);
         }
         setUnitBox() {
             for (let i = 0; i < 16; i++) {
@@ -56,6 +53,7 @@
             let col = this.m_ninjaSelf.addComponent(Laya.CircleCollider);
             let scr = this.m_ninjaSelf.addComponent(Laya.Script);
             rig.gravityScale = 0;
+            rig.bullet = true;
             col.label = 'ninjaSelf';
             scr.onTriggerEnter = (col) => {
                 if (col.label === 'ninjaAI') {
@@ -87,10 +85,10 @@
             let scr = this.m_ninjaAI.addComponent(Laya.Script);
             col.label = 'ninjaAI';
             rig.gravityScale = 0;
+            rig.bullet = true;
             this.m_ninjaAI.on(Laya.Event.CLICK, this, () => {
             });
             console.log('NinjaAI pos: x: ' + this.m_ninjaAI.x + ' y: ' + this.m_ninjaAI.y);
-            console.log(123);
             Laya.stage.addChild(this.m_ninjaAI);
         }
     }

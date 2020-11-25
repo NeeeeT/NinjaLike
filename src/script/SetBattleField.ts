@@ -52,6 +52,8 @@ export default class SetBattleFied extends Laya.Script{
         let scr = this.m_ninjaSelf.addComponent(Laya.Script) as Laya.Script;
 
         rig.gravityScale = 0;
+        rig.bullet = true;
+        
         col.label = 'ninjaSelf';
         scr.onTriggerEnter = (col: Laya.CircleCollider) =>{
             if(col.label === 'ninjaAI'){
@@ -88,6 +90,7 @@ export default class SetBattleFied extends Laya.Script{
 
         col.label = 'ninjaAI';
         rig.gravityScale = 0;
+        rig.bullet = true;
          
         this.m_ninjaAI.on(Laya.Event.CLICK, this, ()=>{
         });
